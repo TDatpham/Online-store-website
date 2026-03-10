@@ -14,7 +14,7 @@ import ProductFirstInfos from "./ProductFirstInfos/ProductFirstInfos";
 import ProductSizes from "./ProductSizes/ProductSizes";
 import ProductReviews from "./ProductReviews/ProductReviews";
 
-const ProductDetails = ({ productData }) => {
+const ProductDetails = ({ productData, onReviewChange }) => {
   // All hooks must be called unconditionally — BEFORE any early return
   const { loadingProductDetails } = useSelector((state) => state.loading);
   const { previewImg, isZoomInPreviewActive } = useSelector(
@@ -69,7 +69,7 @@ const ProductDetails = ({ productData }) => {
             )}
             <ProductDealingControls productData={productData} />
             <ProductFeatures />
-            <ProductReviews productData={productData} />
+            <ProductReviews productData={productData} onReviewChange={onReviewChange} />
           </section>
         </section>
       )}

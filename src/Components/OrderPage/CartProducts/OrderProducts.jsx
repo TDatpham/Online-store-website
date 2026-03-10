@@ -16,20 +16,21 @@ const OrderProducts = () => {
 
   const allProducts = backendProducts.length > 0 ? backendProducts : staticProducts;
 
-  const ordersToDisplay = backendOrders.length > 0 ?
-    backendOrders.flatMap(o => o.items.map(item => {
+  const ordersToDisplay = backendOrders.length > 0
+    ? backendOrders.flatMap(o => o.items.map(item => {
       const pInfo = allProducts.find(p => p.id === item.productId);
       return {
         ...item,
         id: `${o.id}-${item.productId}`,
+        orderId: o.id,
         img: pInfo?.img || "",
         name: pInfo?.name || "Unknown",
         shortName: pInfo?.shortName || "Unknown",
         afterDiscount: item.price.toString(),
         status: o.status
       };
-    })) :
-    localOrders;
+    }))
+    : localOrders;
 
   if (loading && localOrders.length === 0) return <div>Loading orders...</div>;
 
@@ -41,6 +42,7 @@ const OrderProducts = () => {
           <th>{t(`${productsTable}.price`)}</th>
           <th>{t(`${productsTable}.quantity`)}</th>
           <th>{t(`${productsTable}.subtotal`)}</th>
+          <th>Status</th>
         </tr>
       </thead>
 

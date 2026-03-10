@@ -2,8 +2,10 @@ package com.electronics.product.service;
 
 import com.electronics.product.model.Product;
 import com.electronics.product.model.Category;
+import com.electronics.product.model.Review;
 import com.electronics.product.repository.ProductRepository;
 import com.electronics.product.repository.CategoryRepository;
+import com.electronics.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,57 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
+    private final ReviewRepository reviewRepository;
+
+    public List<Review> getReviewsByProductId(Long productId) {
+        return reviewRepository.findByProductId(productId);
+    }
+
+    public Review addReview(Review review) {
+        if (review.getDate() == null) {
+            review.setDate(java.time.LocalDateTime.now());
+        }
+        Review savedReview = reviewRepository.save(review);
+        updateProductRating(review.getProductId());
+        return savedReview;
+    }
+
+    public Review updateReview(Long id, Review newReviewData) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        review.setRating(newReviewData.getRating());
+        review.setComment(newReviewData.getComment());
+        Review saved = reviewRepository.save(review);
+        updateProductRating(review.getProductId());
+        return saved;
+    }
+
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        Long productId = review.getProductId();
+        reviewRepository.deleteById(id);
+        updateProductRating(productId);
+    }
+
+    private void updateProductRating(Long productId) {
+        productRepository.findById(productId).ifPresent(product -> {
+            List<Review> reviews = reviewRepository.findByProductId(productId);
+            if (reviews.isEmpty()) {
+                product.setVotes(0);
+                product.setRate(0.0);
+            } else {
+                double avg = reviews.stream()
+                        .mapToInt(Review::getRating)
+                        .average()
+                        .orElse(0.0);
+                product.setVotes(reviews.size());
+                product.setRate(avg);
+            }
+            productRepository.save(product);
+        });
+    }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { showAlert } from "src/Features/alertsSlice";
 import { orderApi } from "src/Services/api";
 import { store } from "src/App/store";
-import { transferProducts } from "src/Features/productsSlice";
+import { transferProducts, clearCart, updateProductsState } from "src/Features/productsSlice";
 import {
   blurInputs,
   isCheckoutFormValid,
@@ -30,8 +30,8 @@ const CheckoutPage = () => {
     initialValues: {
       firstName: "",
       companyName: "",
-      address: "",
       streetAddress: "",
+      address: "", // Mapping to apartment/address in staticData
       cityOrTown: "",
       phoneNumber: "",
       email: "",
@@ -62,7 +62,11 @@ const CheckoutPage = () => {
     if (!saveBillingInfoToLocal) localStorage.removeItem("billingInfo");
 
     if (isInputFocused && isCheckboxFocused) return;
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      console.log("Form invalid, inputs:", inputs);
+      dispatch(showAlert({ alertText: "Please fill in all required fields correctly.", alertState: "warning", alertType: "alert" }));
+      return;
+    }
 
     if (isCartEmpty) {
       showEmptyCartAlert(dispatch, t);
@@ -70,9 +74,9 @@ const CheckoutPage = () => {
     }
 
     try {
-      const { loginInfo } = store.getState().user; // Get userID from store
+      const { loginInfo } = store.getState().user;
       const orderData = {
-        userId: loginInfo?.id || 1, // Fallback to 1 for demo
+        userId: loginInfo?.id || 1,
         totalAmount: cartProducts.reduce((acc, p) => {
           const price = typeof p.afterDiscount === 'string'
             ? parseFloat(p.afterDiscount.replaceAll(",", ""))
@@ -88,13 +92,26 @@ const CheckoutPage = () => {
         }))
       };
 
+      dispatch(showAlert({ alertText: "Placing your order...", alertState: "info", alertType: "alert" }));
       await orderApi.create(orderData);
-      finalizeOrder(dispatch, t);
-      // Small UX effect: redirect to orders page after success
-      navigate("/order");
+
+      // Clear cart and move to orders
+      dispatch(transferProducts({ from: "cartProducts", to: "orderProducts" }));
+      dispatch(clearCart());
+
+      dispatch(
+        showAlert({
+          alertState: "success",
+          alertText: t("toastAlert.checkoutSuccess"),
+          alertType: "alert",
+        })
+      );
+
+      // Redirect after a small delay
+      setTimeout(() => navigate("/order"), 1500);
     } catch (error) {
       console.error("Order failed:", error);
-      dispatch(showAlert({ alertText: "Failed to place order", alertState: "error", alertType: "alert" }));
+      dispatch(showAlert({ alertText: "Failed to place order. Please try again.", alertState: "error", alertType: "alert" }));
     }
   }
 

@@ -1,10 +1,13 @@
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\DataInitializer.java
-D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\Product.java
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\service\KafkaConsumerService.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\controller\StockController.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\ProductColor.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\repository\ReviewRepository.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\service\ProductService.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\repository\ProductRepository.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\Product.java
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\repository\CategoryRepository.java
+D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\Review.java
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\controller\ProductController.java
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\Category.java
 D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\ProductServiceApplication.java
-D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\model\ProductColor.java
-D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\service\ProductService.java
-D:\Personal Project\Electronics-store-website\backend\product-service\src\main\java\com\electronics\product\repository\ProductRepository.java

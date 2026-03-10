@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { arraysToEmpty } from "src/Data/globalVariables";
 import { showAlert } from "src/Features/alertsSlice";
-import { setEmptyArrays } from "src/Features/productsSlice";
+import { clearUserProducts } from "src/Features/productsSlice";
 import { signOut } from "src/Features/userSlice";
 
 const useSignOut = () => {
@@ -10,9 +9,8 @@ const useSignOut = () => {
   const { t } = useTranslation();
 
   const handleSignOut = () => {
-    const emptyArraysAction = setEmptyArrays({ keys: arraysToEmpty });
-
-    dispatch(emptyArraysAction);
+    // Clear user-specific data from Redux (still kept in localStorage by userId)
+    dispatch(clearUserProducts());
     dispatch(signOut());
     showSignOutAlert(dispatch, t);
   };

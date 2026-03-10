@@ -5,16 +5,16 @@ const productsDataLocal = localStorage.getItem("productsSliceData");
 const initialState = productsDataLocal
   ? JSON.parse(productsDataLocal)
   : {
-      saveBillingInfoToLocal: false,
-      favoritesProducts: [],
-      searchProducts: [],
-      orderProducts: [],
-      cartProducts: [],
-      wishList: [],
-      productQuantity: 1,
-      selectedProduct: null,
-      removeOrderProduct: "",
-    };
+    saveBillingInfoToLocal: false,
+    favoritesProducts: [],
+    searchProducts: [],
+    orderProducts: [],
+    cartProducts: [],
+    wishList: [],
+    productQuantity: 1,
+    selectedProduct: null,
+    removeOrderProduct: "",
+  };
 
 const productsSlice = createSlice({
   initialState,
@@ -43,6 +43,19 @@ const productsSlice = createSlice({
       state[to] = state[to].concat(state[from]);
       state[from] = [];
     },
+    clearCart: (state) => {
+      state.cartProducts = [];
+    },
+    /** Load user-specific favorites and wishlist when the user logs in. */
+    loadUserProducts: (state, { payload: { favoritesProducts, wishList } }) => {
+      state.favoritesProducts = favoritesProducts || [];
+      state.wishList = wishList || [];
+    },
+    /** Clear user-specific favorites and wishlist when the user logs out. */
+    clearUserProducts: (state) => {
+      state.favoritesProducts = [];
+      state.wishList = [];
+    },
   },
 });
 
@@ -53,5 +66,8 @@ export const {
   removeByKeyName,
   setEmptyArrays,
   transferProducts,
+  clearCart,
+  loadUserProducts,
+  clearUserProducts,
 } = productsSlice.actions;
 export default productsSlice.reducer;

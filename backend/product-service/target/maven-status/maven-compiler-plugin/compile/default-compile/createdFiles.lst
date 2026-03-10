@@ -1,9 +1,10 @@
 com\electronics\product\model\Category.class
-com\electronics\product\DataInitializer.class
+com\electronics\product\controller\StockController.class
 com\electronics\product\service\ProductService.class
-com\electronics\product\controller\ProductController.class
-com\electronics\product\model\ProductColor.class
 com\electronics\product\ProductServiceApplication.class
-com\electronics\product\model\Product.class
 com\electronics\product\repository\CategoryRepository.class
 com\electronics\product\repository\ProductRepository.class
+com\electronics\product\DataInitializer.class
+com\electronics\product\controller\ProductController.class
+com\electronics\product\model\ProductColor.class
+com\electronics\product\model\Product.class

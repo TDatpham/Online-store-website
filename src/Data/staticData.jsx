@@ -265,6 +265,7 @@ export const productCardCustomizations = {
     showDetailsIcon: true,
     showNewText: true,
     showWishList: true,
+    showColors: true,
   },
   wishListProducts: {
     showDiscount: true,

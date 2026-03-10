@@ -26,6 +26,7 @@ const ProductFirstInfos = ({ productData }) => {
 
       <div className={s.rateAndReviews}>
         <RateStars rate={rate} />
+        <span className={s.rateValue}>({rate?.toFixed(1)})</span>
         <span className={s.reviews}>{t("detailsPage.reviews", { votes })}</span>
 
         <div className={s.verticalLine} />

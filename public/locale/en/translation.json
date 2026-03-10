@@ -126,6 +126,13 @@
       "description": "Elevate your outerwear collection with the Quilted Satin Jacket. Crafted from premium satin fabric and featuring a quilted design, this jacket combines style and functionality with ease. Whether you're braving the elements or hitting the town, its luxurious texture and sleek silhouette make it a versatile addition to any wardrobe. Say goodbye to boring outerwear and hello to effortless style with the Quilted Satin Jacket."
     }
   },
+  "productsPage": {
+    "filterTitle": "Filters",
+    "filterCategory": "Categories",
+    "filterPrice": "Price Range",
+    "filterColor": "Colors",
+    "resetFilters": "Reset Filters"
+  },
   "productCard": {
     "buttonText": {
       "addToCart": "Add to cart",

@@ -17,7 +17,7 @@ const ProductDetailsPage = () => {
   const { t } = useTranslation();
   const PRODUCT_NAME = useGetSearchParam("product");
   const PRODUCT_ID = useGetSearchParam("id");
-  const { products: backendProducts, loading } = useFetchProducts();
+  const { products: backendProducts, loading, refetch } = useFetchProducts();
 
   // All hooks must be called unconditionally at the top
   useUpdateLoadingOnSamePage({
@@ -102,7 +102,7 @@ const ProductDetailsPage = () => {
       <div className="container">
         <main className={s.detailsPage}>
           <PagesHistory history={history} historyPaths={historyPaths} />
-          <ProductDetails productData={normalizedProduct} />
+          <ProductDetails productData={normalizedProduct} onReviewChange={refetch} />
           <RelatedItemsSection
             productType={normalizedProduct.category}
             currentProduct={normalizedProduct}

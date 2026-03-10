@@ -33,6 +33,9 @@ const Nav = () => {
                   Admin
                 </NavLink>
               )}
+              <NavLink to="/order" style={{ marginRight: "10px" }}>
+                My Orders
+              </NavLink>
               <NavLink to="/profile">{t("nav.profile")}</NavLink>
             </>
           ) : (

@@ -9,7 +9,8 @@ const ToastAlert = () => {
   const { alert } = useSelector((state) => state.alerts);
   const { isAlertActive, alertText, alertState } = alert;
   const dispatch = useDispatch();
-  const { iconName, className } = toastState[alertState];
+  const alertConfig = toastState[alertState] || toastState.info || toastState.warning;
+  const { iconName, className } = alertConfig;
   const showClass = isAlertActive ? s.show : "";
   const debounceId = useRef();
 
@@ -46,4 +47,5 @@ const toastState = {
   success: { iconName: "checked", className: s.success },
   warning: { iconName: "exclamation", className: s.warning },
   error: { iconName: "xMark", className: s.error },
+  info: { iconName: "exclamation", className: s.info || "" },
 };

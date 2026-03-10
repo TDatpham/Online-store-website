@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "src/Features/alertsSlice";
@@ -13,6 +14,7 @@ const BuyButton = () => {
   } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   function handleBuyProduct() {
     const isAlreadyAddedToCart = compareDataToObjValue(
@@ -33,7 +35,7 @@ const BuyButton = () => {
     }
 
     if (isAlreadyAddedToCart) {
-      showWarning("productAlreadyInCart");
+      navigate("/cart");
       return;
     }
 
@@ -55,6 +57,7 @@ const BuyButton = () => {
         value: clonedProduct,
       })
     );
+    navigate("/cart");
   }
 
   function showWarning(translateKey) {

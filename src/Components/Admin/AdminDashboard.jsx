@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { showAlert } from "src/Features/alertsSlice";
 import { productApi, orderApi, authApi, categoryApi } from "src/Services/api";
-import { SalesByCategoryPie, SalesByCategoryBar, RevenueByMonthLine } from "./AdminCharts";
+import { SalesByCategoryPie, SalesByCategoryBar, RevenueByMonthLine, OrdersCountByMonthLine } from "./AdminCharts";
 import s from "./AdminDashboard.module.scss";
 
 const TABS = {
@@ -44,12 +44,16 @@ const AdminDashboard = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fetchAllData = () => {
     fetchProducts();
     fetchStats();
     fetchOrders();
     fetchUsers();
     fetchCategories();
+  };
+
+  useEffect(() => {
+    fetchAllData();
   }, []);
 
   const fetchProducts = async () => {
@@ -367,24 +371,52 @@ const AdminDashboard = () => {
     [products]
   );
 
-  const revenueByMonth = useMemo(
-    () => {
-      const currentYear = new Date().getFullYear();
-      return orders.reduce((acc, o) => {
-        if (!o.orderDate) return acc;
-        const date = new Date(o.orderDate);
-        const month = `${date.getMonth() + 1}`.padStart(2, "0");
-        acc[month] = (acc[month] || 0) + (o.totalAmount || 0);
-        return acc;
-      }, {});
-    },
-    [orders]
-  );
+  const parseDate = (dateVal) => {
+    if (!dateVal) return new Date();
+    if (Array.isArray(dateVal)) {
+      // LocalDateTime as array [year, month, day, hour, minute]
+      return new Date(dateVal[0], dateVal[1] - 1, dateVal[2], dateVal[3] || 0, dateVal[4] || 0);
+    }
+    return new Date(dateVal);
+  };
+
+  const revenueByMonth = useMemo(() => {
+    const fullYear = {};
+    for (let i = 1; i <= 12; i++) {
+      fullYear[i.toString().padStart(2, "0")] = 0;
+    }
+
+    return orders.reduce((acc, o) => {
+      const date = parseDate(o.orderDate);
+      const month = `${date.getMonth() + 1}`.padStart(2, "0");
+      acc[month] = (acc[month] || 0) + (o.totalAmount || 0);
+      return acc;
+    }, fullYear);
+  }, [orders]);
+
+  const ordersCountByMonth = useMemo(() => {
+    const fullYear = {};
+    for (let i = 1; i <= 12; i++) {
+      fullYear[i.toString().padStart(2, "0")] = 0;
+    }
+
+    return orders.reduce((acc, o) => {
+      const date = parseDate(o.orderDate);
+      const month = `${date.getMonth() + 1}`.padStart(2, "0");
+      acc[month] = (acc[month] || 0) + 1;
+      return acc;
+    }, fullYear);
+  }, [orders]);
 
   return (
     <div className={s.adminDashboard}>
       <div className="container">
-        <h1>Admin Dashboard</h1>
+        <div className={s.header}>
+          <h1>Admin Dashboard</h1>
+          <button onClick={fetchAllData} className={s.refreshBtn}>
+            Refresh Data
+          </button>
+        </div>
 
         <div className={s.adminLayout}>
           <aside className={s.sidebar}>
@@ -479,6 +511,16 @@ const AdminDashboard = () => {
                     <RevenueByMonthLine data={revenueByMonth} />
                   ) : (
                     <p>Chưa có đơn hàng để tính doanh thu theo tháng.</p>
+                  )}
+                </div>
+
+                {/* Biểu đồ đường: Số đơn hàng theo tháng */}
+                <div className={s.chartBlock}>
+                  <h2>Số đơn hàng theo tháng (Biểu đồ đường)</h2>
+                  {Object.keys(ordersCountByMonth).length ? (
+                    <OrdersCountByMonthLine data={ordersCountByMonth} />
+                  ) : (
+                    <p>Chưa có đơn hàng để thống kê số lượng.</p>
                   )}
                 </div>
               </section>

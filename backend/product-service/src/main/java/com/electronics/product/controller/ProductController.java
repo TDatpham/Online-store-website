@@ -2,6 +2,7 @@ package com.electronics.product.controller;
 
 import com.electronics.product.model.Product;
 import com.electronics.product.model.Category;
+import com.electronics.product.model.Review;
 import com.electronics.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -72,6 +73,29 @@ public class ProductController {
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         productService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Reviews
+    @GetMapping("/{id}/reviews")
+    public List<Review> getReviewsByProductId(@PathVariable Long id) {
+        return productService.getReviewsByProductId(id);
+    }
+
+    @PostMapping("/{id}/reviews")
+    public Review addReview(@PathVariable Long id, @RequestBody Review review) {
+        review.setProductId(id);
+        return productService.addReview(review);
+    }
+
+    @PutMapping("/reviews/{id}")
+    public Review updateReview(@PathVariable Long id, @RequestBody Review review) {
+        return productService.updateReview(id, review);
+    }
+
+    @DeleteMapping("/reviews/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+        productService.deleteReview(id);
         return ResponseEntity.noContent().build();
     }
 }

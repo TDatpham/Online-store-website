@@ -12,6 +12,13 @@
   margin: 10px 0;
 }
 
+.rateValue {
+  font-size: .875rem;
+  color: #888;
+  font-weight: 500;
+  margin-left: -10px;
+}
+
 @include m.very-small {
   .rateAndReviews {
     flex-direction: column;

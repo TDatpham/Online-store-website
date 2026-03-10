@@ -26,7 +26,7 @@ public class Product {
     private String category;
     private String img;
     private String addedDate;
-    private Integer stockQuantity;
+    private Integer stockQuantity = 50;
 
     @ElementCollection
     private List<String> otherImages;

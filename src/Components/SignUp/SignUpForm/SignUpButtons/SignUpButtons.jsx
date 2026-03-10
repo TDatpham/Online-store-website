@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { showAlert } from "src/Features/alertsSlice";
 import { setLoginData } from "src/Features/userSlice";
+import { loadUserProducts } from "src/Features/productsSlice";
+import { loadUserData } from "src/Functions/userDataStorage";
 import { authApi } from "src/Services/api";
 import { signInAlert } from "../SignUpForm";
 import s from "./SignUpButtons.module.scss";
@@ -17,6 +19,13 @@ const SignUpButtons = () => {
       const response = await authApi.googleLogin(credentialResponse.credential);
       if (response.data) {
         dispatch(setLoginData(response.data));
+        // Restore user-specific favorites and wishlist
+        const userId = response.data?.user?.id || response.data?.id;
+        if (userId) {
+          const favoritesProducts = loadUserData("favoritesProducts", userId);
+          const wishList = loadUserData("wishList", userId);
+          dispatch(loadUserProducts({ favoritesProducts, wishList }));
+        }
         signInAlert(t, dispatch);
       }
     } catch (error) {

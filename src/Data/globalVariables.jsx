@@ -57,8 +57,8 @@ export const regexPatterns = {
   email: /^[0-9a-zA-Z._]+@[a-z]+\.[a-z]+$/,
   price: /\B(?=(\d{3})+(?!\d))/g,
   words: /([-]|\s?&\s|'s[-&]?)/g,
-  // Phone: optional +, 8–15 digits to support more formats
-  iraqiPhone: /^\+?\d{8,15}$/,
+  // Phone: digits, +, -, spaces, 7–15 characters
+  iraqiPhone: /^[0-9+\- ]{7,20}$/,
 };
 
 export const DEFAULT_LOGIN_DATA = {

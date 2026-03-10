@@ -55,7 +55,11 @@ export function SalesByCategoryBar({ data }) {
         <YAxis tick={{ fontSize: 12 }} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="sold" name="Sold (units)" fill="#db4444" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="sold" name="Sold (units)">
+          {chartData.map((_, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );
@@ -80,6 +84,30 @@ export function RevenueByMonthLine({ data }) {
         <Tooltip formatter={(v) => [`$${v}`, "Revenue"]} />
         <Legend />
         <Line type="monotone" dataKey="revenue" name="Revenue ($)" stroke="#4a90e2" strokeWidth={2} dot={{ r: 4 }} />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+}
+
+export function OrdersCountByMonthLine({ data }) {
+  const chartData = Object.entries(data || {})
+    .map(([month, count]) => ({
+      monthKey: parseInt(month, 10),
+      month: `Tháng ${parseInt(month, 10)}`,
+      count: Number(count) || 0,
+    }))
+    .sort((a, b) => a.monthKey - b.monthKey);
+  if (chartData.length === 0) return <p className="chartNoData">Chưa có dữ liệu.</p>;
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={chartData} margin={{ top: 10, right: 20, left: 10, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="month" tick={{ fontSize: 11 }} interval={0} />
+        <YAxis tick={{ fontSize: 12 }} />
+        <Tooltip formatter={(v) => [v, "Orders"]} />
+        <Legend />
+        <Line type="monotone" dataKey="count" name="Orders" stroke="#50c878" strokeWidth={2} dot={{ r: 4 }} />
       </LineChart>
     </ResponsiveContainer>
   );

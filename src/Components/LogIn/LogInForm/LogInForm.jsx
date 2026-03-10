@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { showAlert } from "src/Features/alertsSlice";
 import { setLoginData } from "src/Features/userSlice";
+import { loadUserProducts } from "src/Features/productsSlice";
+import { loadUserData } from "src/Functions/userDataStorage";
 import { authApi } from "src/Services/api";
 import { simpleValidationCheck } from "src/Functions/componentsFunctions";
 import useOnlineStatus from "src/Hooks/Helper/useOnlineStatus";
@@ -36,6 +38,7 @@ const LogInForm = () => {
       const response = await authApi.login({ username: emailOrPhone, password });
       if (response.data) {
         dispatch(setLoginData(response.data));
+        restoreUserProducts(dispatch, response.data);
         logInAlert(dispatch, t);
       }
     } catch (error) {
@@ -60,6 +63,7 @@ const LogInForm = () => {
       const response = await authApi.googleLogin(idToken);
       if (response.data) {
         dispatch(setLoginData(response.data));
+        restoreUserProducts(dispatch, response.data);
         logInAlert(dispatch, t);
       }
     } catch (error) {
@@ -97,6 +101,7 @@ const LogInForm = () => {
       const response = await authApi.verifyOtp(emailOrPhone, otpCode);
       if (response.data) {
         dispatch(setLoginData(response.data));
+        restoreUserProducts(dispatch, response.data);
         dispatch(showAlert({ alertText: "Logged in successfully with OTP!", alertState: "success", alertType: "alert" }));
         setView(VIEW.LOGIN);
       }
@@ -295,4 +300,16 @@ function internetConnectionAlert(dispatch, t) {
   const alertText = t("toastAlert.loginFailed");
   const alertState = "error";
   dispatch(showAlert({ alertText, alertState, alertType: "alert" }));
+}
+
+/**
+ * After login, restore the user's saved favorites and wishlist
+ * from their per-user localStorage slot.
+ */
+function restoreUserProducts(dispatch, responseData) {
+  const userId = responseData?.user?.id || responseData?.id;
+  if (!userId) return;
+  const favoritesProducts = loadUserData("favoritesProducts", userId);
+  const wishList = loadUserData("wishList", userId);
+  dispatch(loadUserProducts({ favoritesProducts, wishList }));
 }
