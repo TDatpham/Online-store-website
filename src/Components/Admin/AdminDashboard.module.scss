@@ -1,438 +1,831 @@
+// ── Admin Dashboard – Premium Dark Theme ──────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+// ── Design Tokens ─────────────────────────────────────────────────────────────
+$accent:   #6c63ff;
+$accent2:  #f857a6;
+$success:  #10b981;
+$warning:  #f59e0b;
+$danger:   #ef4444;
+$info:     #3b82f6;
+
+$bg-page:     #0f1117;
+$bg-sidebar:  #13141c;
+$bg-card:     #1c1e2a;
+$bg-surface:  #22243a;
+$border:      rgba(255,255,255,0.07);
+
+$text-primary:   #f1f5f9;
+$text-secondary: #94a3b8;
+$text-muted:     #64748b;
+
+$radius-lg: 16px;
+$radius-md: 12px;
+$radius-sm: 8px;
+
+$shadow-glow: 0 0 40px rgba(108,99,255,0.08);
+$shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+$shadow-hover: 0 8px 32px rgba(0,0,0,0.5);
+
+// ── Root ──────────────────────────────────────────────────────────────────────
 .adminDashboard {
-    padding: 40px 0;
-    --primary-color: #db4444;
-    --bg-light: #f5f5f5;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background: $bg-page;
+  color: $text-primary;
+  padding: 0;
 
+  // ── Layout ────────────────────────────────────────────────────────────────
+  .adminLayout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
 
+  // ── Sidebar ───────────────────────────────────────────────────────────────
+  .sidebar {
+    background: $bg-sidebar;
+    border-right: 1px solid $border;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 28px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 
-    section {
-        margin-bottom: 60px;
-        background: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    &::-webkit-scrollbar { width: 0; }
 
-        h2 {
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--bg-light);
-        }
-    }
+    .logoArea {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid $border;
 
-    .form {
+      .logoIcon {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-sm;
+        background: linear-gradient(135deg, $accent, $accent2);
         display: flex;
-        flex-direction: column;
-        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 4px 16px rgba($accent, 0.4);
+        flex-shrink: 0;
+      }
 
-        .inputGroup {
-            display: flex;
-            gap: 15px;
+      h1 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: $text-primary;
+        letter-spacing: -0.3px;
+        line-height: 1.2;
+        margin: 0;
 
-            input {
-                flex: 1;
-            }
+        span {
+          display: block;
+          font-size: 0.7rem;
+          font-weight: 400;
+          color: $text-muted;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
         }
-
-        input,
-        textarea {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .inputSection {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 10px 0;
-
-            label {
-                font-size: 14px;
-                font-weight: 600;
-                color: #4a5568;
-            }
-
-            .colorOptions {
-                display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-
-                .colorOption {
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 50%;
-                    border: 2px solid #fff;
-                    box-shadow: 0 0 0 1px #cbd5e0;
-                    cursor: pointer;
-                    transition: transform 0.2s, box-shadow 0.2s;
-
-                    &:hover {
-                        transform: scale(1.1);
-                    }
-
-                    &.selectedColor {
-                        box-shadow: 0 0 0 2px var(--primary-color);
-                        transform: scale(1.1);
-                    }
-                }
-            }
-        }
-
-        .buttonGroup {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .submitBtn {
-            background: var(--primary-color);
-            color: #fff;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .cancelBtn {
-            background: #666;
-            color: #fff;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+      }
     }
 
-    .table {
-        width: 100%;
-        border-collapse: collapse;
+    .navSection {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: $text-muted;
+      padding: 12px 12px 6px;
+    }
+  }
 
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--bg-light);
-        }
+  .tabBtn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: $radius-sm;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-secondary;
+    transition: all 0.2s ease;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
 
-        th {
-            background: var(--bg-light);
-        }
-
-        .actionBtns {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .editBtn {
-            background: #4a90e2;
-            color: #fff;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 4px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-
-        .deleteBtn {
-            background: var(--primary-color);
-            color: #fff;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .approveBtn {
-            background: #28a745;
-            color: #fff;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 4px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-
-        .rejectBtn {
-            background: #ffc107;
-            color: #000;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 4px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-
-        .statusBadge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-
-            &.approved {
-                background: #e6fffa;
-                color: #2c7a7b;
-            }
-
-            &.pending {
-                background: #fffaf0;
-                color: #b7791f;
-            }
-
-            &.rejected {
-                background: #fff5f5;
-                color: #c53030;
-            }
-        }
+    .tabIcon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
     }
 
-    .statsGrid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
+    &:hover {
+      background: rgba(255,255,255,0.05);
+      color: $text-primary;
+
+      .tabIcon {
+        background: rgba($accent, 0.15);
+      }
+    }
+  }
+
+  .activeTab {
+    background: linear-gradient(135deg, rgba($accent, 0.15), rgba($accent2, 0.08));
+    color: $text-primary;
+    font-weight: 600;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 3px;
+      background: linear-gradient($accent, $accent2);
+      border-radius: 0 2px 2px 0;
     }
 
-    .statCard {
-        background: #fff;
-        padding: 24px;
-        border-radius: 12px;
-        text-align: left;
-        border: 1px solid #edf2f7;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-        position: relative;
-        overflow: hidden;
+    .tabIcon {
+      background: linear-gradient(135deg, rgba($accent, 0.25), rgba($accent2, 0.15));
+    }
+  }
 
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #db4444;
-        }
+  // ── Main Content ───────────────────────────────────────────────────────────
+  .content {
+    padding: 32px;
+    overflow-y: auto;
+    background: $bg-page;
+  }
 
-        h3 {
-            font-size: 0.9rem;
-            color: #718096;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+  // ── Page Header ───────────────────────────────────────────────────────────
+  .pageHeader {
+    margin-bottom: 32px;
 
-        .statNumber {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 5px;
-        }
-
-        .statGrowth {
-            font-size: 0.85rem;
-            color: #48bb78;
-            font-weight: 500;
-        }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0 0 4px;
     }
 
+    p {
+      font-size: 0.875rem;
+      color: $text-muted;
+      margin: 0;
+    }
+  }
+
+  // ── Stats Grid ─────────────────────────────────────────────────────────────
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .statCard {
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-lg;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: $shadow-hover;
+    }
+
+    .statIcon {
+      width: 44px;
+      height: 44px;
+      border-radius: $radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: $text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .statNumber {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: $text-primary;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .statGrowth {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: $success;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &::before { content: '↑'; }
+    }
+
+    .statGrowthNeutral {
+      font-size: 0.78rem;
+      color: $text-muted;
+    }
+  }
+
+  // Stat card colour variants
+  .statRevenue  .statIcon { background: rgba($accent, 0.15); }
+  .statOrders   .statIcon { background: rgba($info, 0.15); }
+  .statCustomers .statIcon { background: rgba($success, 0.15); }
+  .statProducts .statIcon { background: rgba($warning, 0.15); }
+
+  // ── Charts Grid ────────────────────────────────────────────────────────────
+  .chartsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .fullWidth {
+    grid-column: 1 / -1;
+  }
+
+  .chartBlock {
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 24px;
+    transition: box-shadow 0.25s ease;
+
+    &:hover {
+      box-shadow: $shadow-glow;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid $border;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chartHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid $border;
+
+      h2 {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+
+  // ── Section Wrapper ────────────────────────────────────────────────────────
+  section {
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: 24px;
+    }
+  }
+
+  .statsSection {
+    section { background: transparent; box-shadow: none; padding: 0; }
+  }
+
+  // ── Forms ──────────────────────────────────────────────────────────────────
+  .formSection {
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 28px;
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    .inputGroup {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      background: $bg-surface;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: $radius-sm;
+      color: $text-primary;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      padding: 11px 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+
+      &::placeholder { color: $text-muted; }
+
+      &:focus {
+        border-color: $accent;
+        box-shadow: 0 0 0 3px rgba($accent, 0.15);
+      }
+
+      option { background: $bg-surface; }
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .inputSection {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $text-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .colorOptions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .colorOption {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          border: 2px solid transparent;
+          box-shadow: 0 0 0 1px rgba(255,255,255,0.15);
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+
+          &:hover { transform: scale(1.15); }
+
+          &.selectedColor {
+            box-shadow: 0 0 0 3px $accent;
+            transform: scale(1.15);
+          }
+        }
+      }
+    }
+
+    .buttonGroup {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+  }
+
+  // ── Buttons ────────────────────────────────────────────────────────────────
+  .submitBtn {
+    background: linear-gradient(135deg, $accent, $accent2);
+    color: #fff;
+    padding: 11px 28px;
+    border: none;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 16px rgba($accent, 0.35);
+
+    &:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+  }
+
+  .cancelBtn {
+    background: rgba(255,255,255, 0.07);
+    color: $text-secondary;
+    padding: 11px 28px;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+      background: rgba(255,255,255,0.12);
+      color: $text-primary;
+    }
+  }
+
+  // ── List Section (Table wrapper) ───────────────────────────────────────────
+  .listSection {
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 28px;
+    overflow: hidden;
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  // ── Table ──────────────────────────────────────────────────────────────────
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+
+    thead tr {
+      background: rgba(255,255,255,0.03);
+    }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: $text-muted;
+      border-bottom: 1px solid $border;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 16px;
+      color: $text-secondary;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    tbody tr {
+      transition: background 0.15s;
+
+      &:hover { background: rgba(255,255,255,0.025); }
+      &:last-child td { border-bottom: none; }
+    }
+
+    .actionBtns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .editBtn {
+      background: rgba($info, 0.15);
+      color: lighten($info, 20%);
+      border: 1px solid rgba($info, 0.3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+
+      &:hover { background: rgba($info, 0.28); }
+    }
+
+    .deleteBtn {
+      background: rgba($danger, 0.12);
+      color: lighten($danger, 15%);
+      border: 1px solid rgba($danger, 0.3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+
+      &:hover { background: rgba($danger, 0.25); }
+    }
+
+    .approveBtn {
+      background: rgba($success, 0.12);
+      color: lighten($success, 15%);
+      border: 1px solid rgba($success, 0.3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+
+      &:hover { background: rgba($success, 0.25); }
+    }
+
+    .rejectBtn {
+      background: rgba($warning, 0.12);
+      color: lighten($warning, 10%);
+      border: 1px solid rgba($warning, 0.3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+
+      &:hover { background: rgba($warning, 0.25); }
+    }
+
+    .statusBadge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.approved {
+        background: rgba($success, 0.15);
+        color: #6ee7b7;
+        border: 1px solid rgba($success, 0.25);
+      }
+
+      &.pending {
+        background: rgba($warning, 0.15);
+        color: #fcd34d;
+        border: 1px solid rgba($warning, 0.25);
+      }
+
+      &.rejected {
+        background: rgba($danger, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba($danger, 0.25);
+      }
+    }
+
+    // Order status select inside table
+    .statusSelect {
+      background: $bg-surface;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: $text-secondary;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+
+      &:focus { border-color: $accent; }
+    }
+  }
+
+  // ── Order Filter Bar ───────────────────────────────────────────────────────
+  .filterBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: $bg-surface;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: $text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    select {
+      background: $bg-card;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: $text-primary;
+      font-size: 0.875rem;
+      padding: 8px 12px;
+      outline: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+
+      &:focus { border-color: $accent; }
+      option { background: $bg-card; }
+    }
+  }
+
+  // ── Standalone Status Select (used inside order table rows) ───────────────
+  .statusSelect {
+    background: $bg-surface;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: $text-secondary;
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+
+    &:focus { border-color: $accent; }
+    option { background: $bg-surface; }
+  }
+
+  // ── Action Buttons (reusable across all sections) ─────────────────────────
+  .editBtn {
+    background: rgba($info, 0.15);
+    color: lighten($info, 20%);
+    border: 1px solid rgba($info, 0.3);
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    &:hover { background: rgba($info, 0.28); }
+  }
+
+  .deleteBtn {
+    background: rgba($danger, 0.12);
+    color: lighten($danger, 15%);
+    border: 1px solid rgba($danger, 0.3);
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    &:hover { background: rgba($danger, 0.25); }
+  }
+
+  .approveBtn {
+    background: rgba($success, 0.12);
+    color: lighten($success, 15%);
+    border: 1px solid rgba($success, 0.3);
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    &:hover { background: rgba($success, 0.25); }
+  }
+
+  .rejectBtn {
+    background: rgba($warning, 0.12);
+    color: lighten($warning, 10%);
+    border: 1px solid rgba($warning, 0.3);
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    &:hover { background: rgba($warning, 0.25); }
+  }
+
+  .actionBtns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .statusBadge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.approved {
+      background: rgba($success, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba($success, 0.25);
+    }
+
+    &.pending {
+      background: rgba($warning, 0.15);
+      color: #fcd34d;
+      border: 1px solid rgba($warning, 0.25);
+    }
+
+    &.rejected {
+      background: rgba($danger, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba($danger, 0.25);
+    }
+  }
+
+
+  // ── Responsive ────────────────────────────────────────────────────────────
+  @media (max-width: 1100px) {
+    .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px) {
     .adminLayout {
-        display: grid;
-        grid-template-columns: 240px 1fr;
-        gap: 25px;
-        margin-top: 20px;
-        align-items: start;
+      grid-template-columns: 1fr;
     }
 
     .sidebar {
-        background: #1a202c;
-        padding: 24px 12px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        color: #fff;
-        height: min-content;
+      position: static;
+      height: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 16px;
+      gap: 8px;
 
-        .logoArea {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-            .logoIcon {
-                font-size: 18px;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 6px;
-                border-radius: 6px;
-                color: #fff;
-            }
-
-            h1 {
-                margin-bottom: 0;
-                text-align: left;
-                font-size: 1.15rem;
-                font-weight: 700;
-                color: #fff;
-                letter-spacing: -0.5px;
-            }
-        }
+      .logoArea { width: 100%; }
     }
 
     .tabBtn {
-        padding: 12px 16px;
-        border-radius: 8px;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        text-align: left;
-        font-size: 14px;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.8);
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        .tabIcon {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding-left: 20px;
-        }
+      flex: 1 1 auto;
+      justify-content: center;
     }
 
-    .activeTab {
-        background: rgba(255, 255, 255, 0.2);
-        color: #fff;
-        font-weight: 600;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
+    .content { padding: 20px; }
 
-    .sidebarDivider {
-        height: 1px;
-        background: rgba(255, 255, 255, 0.1);
-        margin: 10px 15px;
-    }
+    .chartsGrid { grid-template-columns: 1fr; }
 
-    .content {
-        min-height: 400px;
-    }
+    .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  }
 
-    .chartsGrid {
-        margin-top: 28px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-
-    .fullWidth {
-        grid-column: 1 / -1;
-    }
-
-    .chartBlock {
-        background: #fff;
-        padding: 24px;
-        border: 1px solid #edf2f7;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        min-height: 400px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-        &:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-        }
-
-        .chartHeader {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-
-            h2 {
-                margin-bottom: 0;
-                border-bottom: none;
-                font-size: 1.25rem;
-                font-weight: 600;
-                color: #2d3748;
-            }
-
-            .chartSubtitle {
-                font-size: 0.9rem;
-                color: #a0aec0;
-            }
-
-            .chartFilters {
-                display: flex;
-                gap: 10px;
-
-                select {
-                    padding: 6px 12px;
-                    border-radius: 6px;
-                    background: #f8fafc;
-                    border: 1px solid #e2e8f0;
-                    font-size: 13px;
-                    color: #4a5568;
-                    cursor: pointer;
-                    outline: none;
-
-                    &:hover {
-                        border-color: #cbd5e0;
-                    }
-                }
-            }
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #2d3748;
-            border-bottom: none;
-        }
-
-        .chartNoData {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
-            color: #a0aec0;
-            font-style: italic;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .adminLayout {
-            grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .tabBtn {
-            flex: 1 1 45%;
-            text-align: center;
-        }
-
-        .chartsGrid {
-            grid-template-columns: 1fr;
-        }
-    }
+  @media (max-width: 560px) {
+    .statsGrid { grid-template-columns: 1fr; }
+  }
 }

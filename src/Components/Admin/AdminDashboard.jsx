@@ -477,15 +477,19 @@ const AdminDashboard = () => {
         <div className={s.adminLayout}>
           <aside className={s.sidebar}>
             <div className={s.logoArea}>
-              <span className={s.logoIcon}>🛠️</span>
-              <h1>Admin Dashboard</h1>
+              <span className={s.logoIcon}>⚡</span>
+              <h1>
+                Admin Panel
+                <span>Electronics Store</span>
+              </h1>
             </div>
+            <div className={s.navSection}>Main Menu</div>
             <button
               type="button"
               className={`${s.tabBtn} ${activeTab === TABS.OVERVIEW ? s.activeTab : ""}`}
               onClick={() => setActiveTab(TABS.OVERVIEW)}
             >
-              <span className={s.tabIcon}>📈</span> Statistics
+              <span className={s.tabIcon}>📊</span> Statistics
             </button>
             <button
               type="button"
@@ -501,6 +505,7 @@ const AdminDashboard = () => {
             >
               <span className={s.tabIcon}>🗂️</span> Categories
             </button>
+            <div className={s.navSection}>Management</div>
             <button
               type="button"
               className={`${s.tabBtn} ${activeTab === TABS.USERS ? s.activeTab : ""}`}
@@ -520,60 +525,64 @@ const AdminDashboard = () => {
           <div className={s.content}>
             {activeTab === TABS.OVERVIEW && (
               <section className={s.statsSection}>
-                <h2>Website Overview</h2>
+                <div className={s.pageHeader}>
+                  <h2>Website Overview</h2>
+                  <p>Real-time analytics and performance metrics</p>
+                </div>
                 <div className={s.statsGrid}>
-                  <div className={s.statCard}>
+                  <div className={`${s.statCard} ${s.statRevenue}`}>
+                    <div className={s.statIcon}>💰</div>
                     <h3>Total Revenue</h3>
                     <p className={s.statNumber}>${totalRevenue.toLocaleString()}</p>
-                    <span className={s.statGrowth}>+12.5% vs last month</span>
+                    <span className={s.statGrowth}>12.5% vs last month</span>
                   </div>
-                  <div className={s.statCard}>
+                  <div className={`${s.statCard} ${s.statOrders}`}>
+                    <div className={s.statIcon}>🛍️</div>
                     <h3>Total Orders</h3>
                     <p className={s.statNumber}>{totalOrders}</p>
-                    <span className={s.statGrowth}>+5.2% vs last month</span>
+                    <span className={s.statGrowth}>5.2% vs last month</span>
                   </div>
-                  <div className={s.statCard}>
+                  <div className={`${s.statCard} ${s.statCustomers}`}>
+                    <div className={s.statIcon}>👥</div>
                     <h3>Total Customers</h3>
                     <p className={s.statNumber}>{totalUsers}</p>
-                    <span className={s.statGrowth}>+2.4% vs last month</span>
+                    <span className={s.statGrowth}>2.4% vs last month</span>
                   </div>
-                  <div className={s.statCard}>
+                  <div className={`${s.statCard} ${s.statProducts}`}>
+                    <div className={s.statIcon}>📦</div>
                     <h3>Total Products</h3>
                     <p className={s.statNumber}>{totalProducts}</p>
-                    <span className={s.statGrowth}>Live in store</span>
+                    <span className={s.statGrowthNeutral}>Active in store</span>
                   </div>
                 </div>
 
                 <div className={s.chartsGrid}>
-                  {/* Biểu đồ cột: Doanh số theo thể loại */}
                   <div className={s.chartBlock}>
-                    <h2>Total sales by categories</h2>
+                    <h2>📊 Sales by Category</h2>
                     {Object.keys(salesByCategory).length ? (
                       <SalesByCategoryBar data={salesByCategory} />
                     ) : (
-                      <p className="chartNoData">No data for sales by category.</p>
+                      <p>No data for sales by category.</p>
                     )}
                   </div>
 
-                  {/* Biểu đồ tròn: Phân phối doanh thu */}
                   <div className={s.chartBlock}>
                     <div className={s.chartHeader}>
-                      <h2>Revenue distribution</h2>
+                      <h2>🥧 Revenue Distribution</h2>
                     </div>
                     {Object.keys(salesByCategory).length ? (
                       <SalesByCategoryPie data={salesByCategory} />
                     ) : (
-                      <p className="chartNoData">No data.</p>
+                      <p>No data.</p>
                     )}
                   </div>
 
-                  {/* Biểu đồ đường: Lợi nhuận theo thể loại */}
                   <div className={`${s.chartBlock} ${s.fullWidth}`}>
-                    <h2>🏷️ Revenue by Product Category</h2>
+                    <h2>📈 Revenue by Product Category</h2>
                     {Object.keys(revenueByCategoryData).length > 0 ? (
                       <RevenueByCategoryLine data={revenueByCategoryData} />
                     ) : (
-                      <p className="chartNoData">No category revenue data available.</p>
+                      <p>No category revenue data available.</p>
                     )}
                   </div>
                 </div>
@@ -582,8 +591,12 @@ const AdminDashboard = () => {
 
             {activeTab === TABS.PRODUCTS && (
               <>
+                <div className={s.pageHeader}>
+                  <h2>Product Management</h2>
+                  <p>Add, edit and manage your product catalog</p>
+                </div>
                 <section className={s.formSection}>
-                  <h2>{isEditingProduct ? "Edit Product" : "Add New Product"}</h2>
+                  <h2>{isEditingProduct ? "✏️ Edit Product" : "➕ Add New Product"}</h2>
                   <form onSubmit={handleProductSubmit} className={s.form}>
                     <div className={s.inputGroup}>
                       <input
@@ -709,7 +722,7 @@ const AdminDashboard = () => {
                 </section>
 
                 <section className={s.listSection}>
-                  <h2>Product List</h2>
+                  <h2>🛒 Product List</h2>
                   <table className={s.table}>
                     <thead>
                       <tr>
@@ -770,7 +783,10 @@ const AdminDashboard = () => {
 
             {activeTab === TABS.CATEGORIES && (
               <section>
-                <h2>Category Management</h2>
+                <div className={s.pageHeader}>
+                  <h2>Category Management</h2>
+                  <p>Organize your product categories</p>
+                </div>
 
                 <form onSubmit={handleCategorySubmit} className={s.form}>
                   <div className={s.inputGroup}>
@@ -808,7 +824,7 @@ const AdminDashboard = () => {
                 </form>
 
                 <section className={s.listSection}>
-                  <h2>Categories List</h2>
+                  <h2>🗂️ Categories List</h2>
                   <table className={s.table}>
                     <thead>
                       <tr>
@@ -855,7 +871,10 @@ const AdminDashboard = () => {
 
             {activeTab === TABS.USERS && (
               <section>
-                <h2>User Management</h2>
+                <div className={s.pageHeader}>
+                  <h2>User Management</h2>
+                  <p>Manage user accounts and permissions</p>
+                </div>
                 {editingUser && (
                   <form onSubmit={handleUserSubmit} className={s.form}>
                     <div className={s.inputGroup}>
@@ -955,22 +974,23 @@ const AdminDashboard = () => {
 
             {activeTab === TABS.ORDERS && (
               <section>
-                <h2>Order Management</h2>
+                <div className={s.pageHeader}>
+                  <h2>Order Management</h2>
+                  <p>Track and manage customer orders</p>
+                </div>
 
-                <div style={{ marginBottom: "15px" }}>
-                  <label>
-                    Status filter:{" "}
-                    <select
-                      value={statusFilter}
-                      onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                      <option value="ALL">All</option>
-                      <option value="PENDING">Pending</option>
-                      <option value="SHIPPED">Shipped</option>
-                      <option value="DELIVERED">Delivered</option>
-                      <option value="CANCELLED">Cancelled</option>
-                    </select>
-                  </label>
+                <div className={s.filterBar}>
+                  <label>Filter by Status</label>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                  >
+                    <option value="ALL">All Orders</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="SHIPPED">Shipped</option>
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="CANCELLED">Cancelled</option>
+                  </select>
                 </div>
 
                 {filteredOrders?.length ? (
